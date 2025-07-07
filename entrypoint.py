@@ -3,6 +3,7 @@ import sys
 import argparse
 import getpass
 
+import logging
 
 class PasswordPrompt(argparse.Action):
 
@@ -21,6 +22,8 @@ parser.add_argument('-P', '--password-prompt', dest='password', action=PasswordP
 parser.add_argument('-s', '--strength', type=int, help='Number of hashing rounds to create password hash.')
 parser.add_argument('-v', '--verify', type=str, help='Verify with the provided hash.')
 args = parser.parse_args()
+
+logging.getLogger('passlib').setLevel(logging.ERROR)
 
 if not args.password:
     print('Error: Please provide a password.', file=sys.stderr)
@@ -43,11 +46,11 @@ if args.verify:
 else:
     if args.strength is not None:
         try:
-            bhash = bcrypt.encrypt(password, rounds=args.strength)
+            bhash = bcrypt.hash(password, rounds=args.strength)
         except Exception as e:
             print('Error: %s' % e, file=sys.stderr)
             sys.exit(1)
     else:
-        bhash = bcrypt.encrypt(password)
+        bhash = bcrypt.hash(password)
     print(bhash, end='', flush=True)
     print(file=sys.stderr)
