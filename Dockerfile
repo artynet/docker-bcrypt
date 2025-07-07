@@ -1,5 +1,5 @@
 # Create a bcrypt password
-FROM python:3.11.4
+FROM python:3.13.5-slim-bookworm
 MAINTAINER John Starich <john.starich@thirdship.com>
 RUN ["pip3", "install", "-v", "passlib==1.7.4", "bcrypt==4.3.0"]
 ENTRYPOINT ["python3", "/entrypoint.py"]
