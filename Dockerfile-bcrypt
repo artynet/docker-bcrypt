@@ -1,0 +1,6 @@
+# Create a bcrypt password
+FROM python:3.11.4
+MAINTAINER John Starich <john.starich@thirdship.com>
+RUN ["pip3", "install", "-v", "passlib==1.7.4", "bcrypt==4.3.0"]
+ENTRYPOINT ["python3", "/entrypoint.py"]
+COPY entrypoint-bcrypt.py /entrypoint.py
